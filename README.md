@@ -2,7 +2,6 @@
 
 ![Logo](https://tiempodenegocios.com/wp-content/uploads/2017/10/lista-de-tareas-700x406.jpg)
 
-Es una aplicación de gestión de tareas que permite a los usuarios crear, editar y eliminar tareas. La aplicación está diseñada para ser intuitiva y fácil de usar, ayudando a los usuarios a mantenerse organizados y productivos
 
 ## Insignias
 
@@ -12,6 +11,29 @@ Es una aplicación de gestión de tareas que permite a los usuarios crear, edita
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
+## Índice
+
+*[Insignias](#insignias)
+
+*[Descripción del proyecto](#descripción-del-proyecto)
+
+*[Estado](#estado)
+
+*[Funciones-principales](#funciones-principales)
+
+*[Acceso](#acceso)
+
+*[Tecnologías-Utilizadas](#tecnologías-utilizadas)
+
+*[Personas-Contribuyentes](#personas-contribuyentes)
+
+*[Persona-Desarrolladoras-del-Proyecto](#persona-desarrolladoras-del-proyecto)
+
+*[Licencia](#licencia)
+
+
+## Descripción del proyecto
+Es una aplicación de gestión de tareas que permite a los usuarios crear, editar y eliminar tareas. La aplicación está diseñada para ser intuitiva y fácil de usar, ayudando a los usuarios a mantenerse organizados y productivos.
 
 ## Estado
 
