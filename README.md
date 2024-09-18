@@ -55,7 +55,8 @@ Actualmente TaskManager sigue en desarrollo.
 
 ## Acceso
 
-Actualmente no se permite el acceso al proyecto.
+Para probar la beta acceda al siguiente enlace: 
+https://play.google.com/store/apps/details?id=<taskmanager>
 
 
 ## Tecnologías Utilizadas
