@@ -4,14 +4,6 @@
 
 Es una aplicación de gestión de tareas que permite a los usuarios crear, editar y eliminar tareas. La aplicación está diseñada para ser intuitiva y fácil de usar, ayudando a los usuarios a mantenerse organizados y productivos
 
-
-Estado:en desarollo
-
-Funciones Principales
-Crear Tareas: Los usuarios pueden añadir nuevas tareas con un título y una descripción.
-Editar Tareas: Las tareas existentes se pueden editar para actualizar la información.
-Eliminar Tareas: Los usuarios pueden eliminar tareas que ya no son necesarias.
-Marcar como Completadas: Las tareas se pueden marcar como completadas para un mejor seguimiento.
 ## Insignias
 
 
