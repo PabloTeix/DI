@@ -3,7 +3,7 @@ class Heroe:
     def __init__(self, nombre):
        # se inicializa atributos
         self.nombre = nombre
-        self.ataque = 19
+        self.ataque = 15
         self.defensa = 9
         self.salud = 100
         self.salud_maxima = 100
