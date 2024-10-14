@@ -1,15 +1,29 @@
 import tkinter as tk
-from tkinter import messagebox
 
+# Función para mostrar un mensaje en la etiqueta
 def mostrar_mensaje():
-    messagebox.showinfo("Mensaje","Primer mensaje")
+    etiqueta.config(text="¡Botón presionado!")
+
+# Función para cerrar la ventana
+def cerrar_ventana():
+    root.destroy()
+
+# Crear la ventana principal
 root = tk.Tk()
-root.title("Ejercicio2")
+root.title("Ejercicio 2: Botones")
 root.geometry("300x200")
 
-boton1 = tk.Button(root, text="Mostar mensaje", command=mostrar_mensaje, bg="black", fg="white")
-boton1.pack(pady=50)
+# Crear y empaquetar la etiqueta
+etiqueta = tk.Label(root, text="")
+etiqueta.pack(pady=20)
 
+# Crear y empaquetar el botón que muestra un mensaje
+boton_mensaje = tk.Button(root, text="Mostrar mensaje", command=mostrar_mensaje)
+boton_mensaje.pack(pady=10)
 
+# Crear y empaquetar el botón que cierra la ventana
+boton_cerrar = tk.Button(root, text="Cerrar ventana", command=cerrar_ventana)
+boton_cerrar.pack(pady=10)
 
+# Iniciar el bucle principal de la aplicación
 root.mainloop()
