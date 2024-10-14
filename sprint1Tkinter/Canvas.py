@@ -23,7 +23,7 @@ def dibujar():
 
 # Creamos la ventana principal
 root = tk.Tk()
-root.title("Dibujar Círculo y Rectángulo")
+root.title("Ejercicio 7: Canvas")
 root.geometry("400x400")
 
 # Creamos el Canvas
