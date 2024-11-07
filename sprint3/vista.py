@@ -1,5 +1,7 @@
 import tkinter as tk
 
+import tkinter as tk
+
 
 class MainMenu:
     def __init__(self, root, controller):
@@ -14,8 +16,7 @@ class MainMenu:
         self.play_button = tk.Button(self.root, text="Jugar", width=20, command=self.controller.start_game_callback)
         self.play_button.pack(pady=10)
 
-        self.stats_button = tk.Button(self.root, text="Estadísticas", width=20,
-                                      command=self.controller.show_stats_callback)
+        self.stats_button = tk.Button(self.root, text="Estadísticas", width=20,command=self.controller.show_stats_callback)
         self.stats_button.pack(pady=10)
 
         self.quit_button = tk.Button(self.root, text="Salir", width=20, command=self.controller.quit_callback)
