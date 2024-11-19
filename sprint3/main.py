@@ -1,13 +1,18 @@
 import tkinter as tk
-from vista import MainMenu  # Asegúrate de que esta ruta sea correcta
-from GameController import GameController  # Asegúrate de que esta ruta sea correcta
+
+from controlador import GameController
+from modelo import GameModel
 
 
 def main():
-    root = tk.Tk()  # Crear la ventana principal
-    controller = GameController(root)  # Crear el controlador
-    root.mainloop()  # Iniciar el bucle de la interfaz gráfica
+    root = tk.Tk()
+    root.withdraw()  # Ocultar la ventana principal temporalmente
+
+    model = GameModel()
+    controller = GameController(root, model)  # Inicializamos el controlador
+    controller.view.show()  # Mostrar la vista del menú principal
+
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
-
