@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailActivity"
-    tools:ignore="ExtraText">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Button de "Me gusta" -->
+
 
     <TextView
         android:id="@+id/textViewTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="32dp"
         android:text="Leon"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -25,43 +25,36 @@
         android:id="@+id/imageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/imagen1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitulo"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
+
 
     <TextView
         android:id="@+id/textViewDescripcion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="2dp"
+        android:paddingTop="100dp"
+        android:paddingBottom="10dp"
         android:text="Es un Leon. Los leones son unos de los animales más emblemáticos y fascinantes del reino animal."
         android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/imageView"
+        tools:layout_editor_absoluteY="53dp" />
 
-    <!-- Button de "Me gusta" -->
     <Button
         android:id="@+id/buttonMeGusta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="276dp"
+        android:layout_marginBottom="40dp"
         android:text="Me gusta"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginBottom="25dp" />
-
-
-
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
