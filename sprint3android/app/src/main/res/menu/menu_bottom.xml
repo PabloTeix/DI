@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_primero"
+        android:icon="@drawable/icono_primero"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/page_segundo"
+        android:icon="@drawable/icono_segundo"
+        android:title="Comentario" />
+
+</menu>
