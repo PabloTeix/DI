@@ -1,5 +1,6 @@
 package com.example.mycatalog;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setupNavegation();
+
     }
 
     private void setupNavegation() {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(
                 bottomNavigationView,
                 navHostFragment.getNavController()
+
 
         );
 
