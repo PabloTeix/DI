@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "58035933359",
+    "firebase_url": "https://myfirebaseapp-57ecc-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "myfirebaseapp-57ecc",
     "storage_bucket": "myfirebaseapp-57ecc.firebasestorage.app"
   },

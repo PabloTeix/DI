@@ -2,6 +2,7 @@ plugins {
 
     id("com.android.application")
     id("com.google.gms.google-services")
+
 }
 
 android {
@@ -35,6 +36,7 @@ android {
 
 dependencies {
 
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -47,4 +49,7 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
+    implementation (libs.picasso)
+
 }

@@ -77,7 +77,7 @@ import androidx.core.view.WindowInsetsCompat;
                 Log.w("Firebase", "Error al leer datos", databaseError.toException());
             }
         };
-        
+
 
 
 
