@@ -52,16 +52,18 @@ public class DashboardActivity extends AppCompatActivity {
 
     // Cargar los datos del dashboard desde Firebase
     private void loadDashboardData() {
-        // Obtener datos de Firebase Realtime Database
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("DashboardData");
+        // Obtener referencia de "recetas" en Firebase Realtime Database
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recetas");
 
-        reference.addValueEventListener(new ValueEventListener() {
+        // Leer los datos de la receta con ID "1"
+        reference.child("1").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String title = dataSnapshot.child("title").getValue(String.class);
-                    String description = dataSnapshot.child("description").getValue(String.class);
-                    String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                    // Obtener los datos del título, descripción e imagen
+                    String title = dataSnapshot.child("titulo").getValue(String.class);
+                    String description = dataSnapshot.child("descripcion").getValue(String.class);
+                    String imageUrl = dataSnapshot.child("imagen").getValue(String.class);
 
                     // Actualizar los elementos de la interfaz con los datos
                     tvTitle.setText(title);
@@ -71,11 +73,11 @@ public class DashboardActivity extends AppCompatActivity {
                     if (imageUrl != null && !imageUrl.isEmpty()) {
                         Picasso.get().load(imageUrl).into(ivImage);
                     } else {
-                        // Si no hay URL, mostrar una imagen predeterminada
+                        // Si no hay URL, puedes establecer una imagen predeterminada
                         //ivImage.setImageResource(R.drawable.placeholder_image); // Reemplaza con tu imagen predeterminada
                     }
                 } else {
-                    // Si los datos no existen en Firebase
+                    // Si los datos no existen
                     Toast.makeText(DashboardActivity.this, "Datos no disponibles", Toast.LENGTH_SHORT).show();
                 }
             }
