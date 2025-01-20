@@ -85,7 +85,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Mostrar error si ocurre un fallo al leer los datos
-                Toast.makeText(DashboardActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DashboardActivity.this, "Has cerrado sesion", Toast.LENGTH_SHORT).show();
             }
         });
     }
