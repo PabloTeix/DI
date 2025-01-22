@@ -37,6 +37,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Inicializar adaptador vacío
         recipeAdapter = new RecipeAdapter(this, null);
         recyclerView.setAdapter(recipeAdapter);
 
@@ -47,8 +48,7 @@ public class DashboardActivity extends AppCompatActivity {
         dashboardViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
-                recipeAdapter = new RecipeAdapter(DashboardActivity.this, recipes);
-                recyclerView.setAdapter(recipeAdapter);
+                recipeAdapter.setRecipes(recipes);  // Actualizamos la lista de recetas
             }
         });
 
@@ -83,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
         finish();
     }
 }
+
 
 
 

@@ -35,6 +35,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         this.onItemClickListener = listener;
     }
 
+    // Método para actualizar la lista de recetas
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+        notifyDataSetChanged();  // Notificar que los datos han cambiado
+    }
+
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -75,5 +81,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
     }
 }
+
 
 
