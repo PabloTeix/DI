@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ProyectoSegundo"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".views.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".DashboardActivity"/>
+        <activity android:name=".views.RegisterActivity"/>
+        <activity android:name=".views.DashboardActivity"/>
+        <activity android:name=".views.DetailActivity"/>
+
+        <activity android:name=".models.Recipe"/>
+        <activity android:name=".models.User"/>
+        <activity android:name=".repositories.DashboardRepository"/>
+        <activity android:name=".repositories.UserRepository"/>
+        <activity android:name=".viewmodels.DashboardViewModel"/>
+        <activity android:name=".viewmodels.LoginViewModel"/>
+        <activity android:name=".viewmodels.RegisterViewModel"/>
+        <activity android:name=".adapters.RecipeAdapter"/>
 
     </application>
 

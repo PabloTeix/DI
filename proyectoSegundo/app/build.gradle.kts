@@ -7,18 +7,22 @@ plugins {
 
 android {
     namespace = "com.example.proyectosegundo"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.proyectosegundo"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    android {
+        buildFeatures {
+            dataBinding = true
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -51,5 +55,13 @@ dependencies {
     implementation(libs.firebase.analytics)
 
     implementation (libs.picasso)
+
+
+    dependencies {
+        implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
+        implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+        implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+        implementation ("androidx.recyclerview:recyclerview:1.4.0")
+    }
 
 }

@@ -1,10 +1,11 @@
-    package com.example.proyectosegundo;
+    package com.example.proyectosegundo.views;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.proyectosegundo.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,14 +13,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-    public class MainActivity extends AppCompatActivity {
+    public class DetailActivity extends AppCompatActivity {
         private FirebaseAuth mAuth;
 
         @Override
@@ -41,9 +38,9 @@ import androidx.core.view.WindowInsetsCompat;
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Usuario registrado correctamente.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailActivity.this, "Usuario registrado correctamente.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MainActivity.this, "Error en el registro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailActivity.this, "Error en el registro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -54,9 +51,9 @@ import androidx.core.view.WindowInsetsCompat;
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailActivity.this, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MainActivity.this, "Error en autenticación.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailActivity.this, "Error en autenticación.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
