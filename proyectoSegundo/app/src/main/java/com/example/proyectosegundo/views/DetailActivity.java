@@ -1,81 +1,45 @@
-    package com.example.proyectosegundo.views;
+package com.example.proyectosegundo.views;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.proyectosegundo.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-    public class DetailActivity extends AppCompatActivity {
-        private FirebaseAuth mAuth;
+import com.example.proyectosegundo.R;
+import com.squareup.picasso.Picasso;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
+public class DetailActivity extends AppCompatActivity {
 
-            mAuth = FirebaseAuth.getInstance();
+    private TextView tvTitle, tvDescription;
+    private ImageView ivImage;
 
-            findViewById(R.id.registerButton).setOnClickListener(v -> registerUser());
-            findViewById(R.id.loginButton).setOnClickListener(v -> loginUser());
-            databaseRef.addListenerForSingleValueEvent(userListener);
-        }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
 
-        private void registerUser() {
-            String email = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
-            String password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+        // Referencias a los elementos de la interfaz
+        tvTitle = findViewById(R.id.tvTitle);
+        tvDescription = findViewById(R.id.tvDescription);
+        ivImage = findViewById(R.id.ivImage);
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(DetailActivity.this, "Usuario registrado correctamente.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(DetailActivity.this, "Error en el registro: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        private void loginUser() {
-            String email = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
-            String password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+        // Recibir los datos del Intent
+        Intent intent = getIntent();
+        if (intent != null) {
+            String title = intent.getStringExtra("title");
+            String description = intent.getStringExtra("description");
+            String imageUrl = intent.getStringExtra("imageUrl");
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(DetailActivity.this, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(DetailActivity.this, "Error en autenticación.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+            // Establecer los valores en la interfaz
+            tvTitle.setText(title);
+            tvDescription.setText(description);
 
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("users");
-
-        ValueEventListener userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    String userName = userSnapshot.child("name").getValue(String.class);
-                    Log.d("Firebase", "Nombre del usuario: " + userName);
-                }
+            // Usar Picasso para cargar la imagen desde la URL
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Picasso.get().load(imageUrl).into(ivImage);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("Firebase", "Error al leer datos", databaseError.toException());
-            }
-        };
-
-
-
-
+        }
     }
+}
