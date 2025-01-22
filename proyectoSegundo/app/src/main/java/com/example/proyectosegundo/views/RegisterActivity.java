@@ -2,7 +2,6 @@ package com.example.proyectosegundo.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -44,6 +43,11 @@ public class RegisterActivity extends AppCompatActivity {
         // Observar el mensaje de estado del ViewModel
         registerViewModel.getStatusMessage().observe(this, message -> {
             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+
+            // Si el registro es exitoso, navegar a la pantalla de Login
+            if (message.equals("Registro exitoso")) {
+                navigateToLogin();
+            }
         });
 
         // Observar si el registro está en progreso
@@ -78,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 }
+
 
 
 
