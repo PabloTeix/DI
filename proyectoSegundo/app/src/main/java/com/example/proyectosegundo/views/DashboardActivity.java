@@ -69,6 +69,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent.putExtra("title", recipe.getTitulo());
                 intent.putExtra("description", recipe.getDescripcion());
                 intent.putExtra("imageUrl", recipe.getImagen());
+                intent.putExtra("elementId",recipe.getId());
 
                 // Iniciar la actividad DetailActivity
                 startActivity(intent);

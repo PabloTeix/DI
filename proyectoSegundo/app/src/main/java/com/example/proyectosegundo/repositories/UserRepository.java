@@ -1,17 +1,15 @@
 package com.example.proyectosegundo.repositories;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
 import com.example.proyectosegundo.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 public class UserRepository {
 
@@ -20,7 +18,7 @@ public class UserRepository {
 
     public UserRepository() {
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
     }
 
     // Método para registrar un nuevo usuario
@@ -31,12 +29,11 @@ public class UserRepository {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
                             // Crear un objeto User con los datos adicionales
-                            User newUser = new User(fullName, email, phone, address);
+                            User newUser = new User(fullName, email, phone, address, null);
 
                             // Guardar los datos en Firebase Realtime Database
                             mDatabase.child(user.getUid()).setValue(newUser)
                                     .addOnCompleteListener(dbTask -> {
-                                        // Llamar al listener después de que la base de datos haya guardado los datos del usuario
                                         listener.onComplete(task); // Llamamos al listener del método original
                                     });
                         }
@@ -61,7 +58,44 @@ public class UserRepository {
     public FirebaseUser getCurrentUser() {
         return mAuth.getCurrentUser();
     }
+
+    // Método para obtener los favoritos del usuario
+    public void getFavoritos(final OnCompleteListener<DataSnapshot> listener) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            mDatabase.child(user.getUid()).child("favoritos")
+                    .get() // Recuperamos los favoritos del usuario desde Firebase
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            List<String> favoritos = (List<String>) task.getResult().getValue();
+                            listener.onComplete(task); // Devolver la lista de favoritos
+                        } else {
+                            listener.onComplete(task); // En caso de error
+                        }
+                    });
+        }
+    }
+
+    // Método para agregar un elemento a los favoritos
+    public void addToFavoritos(String elementId, final OnCompleteListener<Void> listener) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            mDatabase.child(user.getUid()).child("favoritos").child(elementId).setValue(true)
+                    .addOnCompleteListener(listener); // Guardar el elemento en los favoritos
+        }
+    }
+
+    // Método para eliminar un elemento de los favoritos
+    public void removeFromFavoritos(String elementId, final OnCompleteListener<Void> listener) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            mDatabase.child(user.getUid()).child("favoritos").child(elementId).removeValue()
+                    .addOnCompleteListener(listener); // Eliminar el elemento de los favoritos
+        }
+    }
 }
+
+
 
 
 

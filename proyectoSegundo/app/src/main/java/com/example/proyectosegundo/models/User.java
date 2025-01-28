@@ -1,22 +1,26 @@
 package com.example.proyectosegundo.models;
 
+import java.util.List;
+
 public class User {
 
     private String fullName;
     private String email;
     private String phone;
     private String address;
+    private List<String> favoritos;  // Lista de favoritos del usuario
 
     // Constructor vacío requerido para Firebase
     public User() {
     }
 
     // Constructor para crear un usuario con datos
-    public User(String fullName, String email, String phone, String address) {
+    public User(String fullName, String email, String phone, String address, List<String> favoritos) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.address = address;
+        this.favoritos = favoritos;
     }
 
     // Métodos getter y setter
@@ -50,6 +54,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<String> getFavoritos() {
+        return favoritos;
+    }
+
+    public void setFavoritos(List<String> favoritos) {
+        this.favoritos = favoritos;
     }
 }
 
