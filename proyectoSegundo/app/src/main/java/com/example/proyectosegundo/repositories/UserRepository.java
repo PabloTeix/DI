@@ -18,7 +18,7 @@ public class UserRepository {
 
     public UserRepository() {
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
     }
 
     // Método para registrar un nuevo usuario
@@ -80,10 +80,11 @@ public class UserRepository {
     public void addToFavoritos(String elementId, final OnCompleteListener<Void> listener) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            mDatabase.child(user.getUid()).child("favoritos").child(elementId).setValue(true)
-                    .addOnCompleteListener(listener); // Guardar el elemento en los favoritos
+            mDatabase.child(user.getUid()).child("favoritos").child(elementId).setValue(elementId)
+                    .addOnCompleteListener(listener); // Guardar el elementId en lugar de true
         }
     }
+
 
     // Método para eliminar un elemento de los favoritos
     public void removeFromFavoritos(String elementId, final OnCompleteListener<Void> listener) {
