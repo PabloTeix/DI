@@ -25,6 +25,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button btnLogout;
     private DashboardViewModel dashboardViewModel;
+    private Button btnListaFavoritos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         btnLogout = findViewById(R.id.btnLogout);
+        btnListaFavoritos=findViewById(R.id.btnListaFavoritos);
         mAuth = FirebaseAuth.getInstance();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,6 +60,9 @@ public class DashboardActivity extends AppCompatActivity {
         // Configurar el botón de Logout
         btnLogout.setOnClickListener(v -> logoutUser());
 
+        // Configurar el botón de ListaFavoritos
+        btnListaFavoritos.setOnClickListener(v -> lista_favoritos());
+
         // Configurar el click en cada item del RecyclerView
         recipeAdapter.setOnItemClickListener(new RecipeAdapter.OnItemClickListener() {
             @Override
@@ -80,6 +85,12 @@ public class DashboardActivity extends AppCompatActivity {
     private void logoutUser() {
         mAuth.signOut();
         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void lista_favoritos() {
+        Intent intent = new Intent(DashboardActivity.this, FavouritesActivity.class);
         startActivity(intent);
         finish();
     }

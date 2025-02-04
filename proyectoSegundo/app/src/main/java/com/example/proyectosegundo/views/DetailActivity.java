@@ -13,8 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectosegundo.R;
 import com.example.proyectosegundo.repositories.UserRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
@@ -56,15 +60,32 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             // Verificar si el elemento ya está en los favoritos
-            userRepository.getFavoritos(task -> {
-                if (task.isSuccessful()) {
-                    List<String> favoritos = (List<String>) task.getResult().getValue();
-                    isFavorite = favoritos != null && favoritos.contains(elementId);
-                    updateFavoriteIcon(); // Actualizar icono según el estado de favorito
-                } else {
-                    Toast.makeText(this, "Error al obtener los favoritos", Toast.LENGTH_SHORT).show();
+            userRepository.getFavoritos(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(Task<DataSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        // Obtenemos los favoritos
+                        DataSnapshot dataSnapshot = task.getResult();
+                        List<String> favoritos = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String favorito = snapshot.getValue(String.class);
+                            if (favorito != null) {
+                                favoritos.add(favorito);
+                            }
+                        }
+
+                        // Verificamos si el elemento es favorito
+                        isFavorite = favoritos.contains(elementId);
+
+                        // Actualizamos el ícono según el estado
+                        updateFavoriteIcon();
+                    } else {
+                        // En caso de error al obtener los favoritos
+                        Toast.makeText(DetailActivity.this, "Error al obtener los favoritos", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
+
 
             // Configurar el clic del botón flotante
             ivFavorite.setOnClickListener(v -> {

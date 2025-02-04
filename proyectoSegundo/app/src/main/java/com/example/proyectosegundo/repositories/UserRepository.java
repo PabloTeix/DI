@@ -1,5 +1,8 @@
 package com.example.proyectosegundo.repositories;
 
+import android.util.Log;
+
+import com.example.proyectosegundo.models.Recipe;
 import com.example.proyectosegundo.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +34,7 @@ public class UserRepository {
                             // Crear un objeto User con los datos adicionales
                             User newUser = new User(fullName, email, phone, address, null);
 
-                            // Guardar los datos en Firebase Realtime Database
+                            // Guardar los datos del usuario en Firebase Realtime Database
                             mDatabase.child(user.getUid()).setValue(newUser)
                                     .addOnCompleteListener(dbTask -> {
                                         listener.onComplete(task); // Llamamos al listener del método original
@@ -67,12 +70,14 @@ public class UserRepository {
                     .get() // Recuperamos los favoritos del usuario desde Firebase
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            List<String> favoritos = (List<String>) task.getResult().getValue();
+                            // Aquí puedes manejar los favoritos obtenidos si es necesario
                             listener.onComplete(task); // Devolver la lista de favoritos
                         } else {
                             listener.onComplete(task); // En caso de error
                         }
                     });
+        } else {
+            listener.onComplete(null); // Si el usuario no está autenticado
         }
     }
 
@@ -82,9 +87,10 @@ public class UserRepository {
         if (user != null) {
             mDatabase.child(user.getUid()).child("favoritos").child(elementId).setValue(elementId)
                     .addOnCompleteListener(listener); // Guardar el elementId en lugar de true
+        } else {
+            listener.onComplete(null); // Si no hay usuario autenticado
         }
     }
-
 
     // Método para eliminar un elemento de los favoritos
     public void removeFromFavoritos(String elementId, final OnCompleteListener<Void> listener) {
@@ -92,9 +98,12 @@ public class UserRepository {
         if (user != null) {
             mDatabase.child(user.getUid()).child("favoritos").child(elementId).removeValue()
                     .addOnCompleteListener(listener); // Eliminar el elemento de los favoritos
+        } else {
+            listener.onComplete(null); // Si no hay usuario autenticado
         }
     }
 }
+
 
 
 

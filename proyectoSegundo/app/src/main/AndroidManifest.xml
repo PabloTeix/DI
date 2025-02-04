@@ -36,6 +36,8 @@
         <activity android:name=".viewmodels.RegisterViewModel"/>
         <activity android:name=".adapters.RecipeAdapter"/>
 
+        <activity android:name=".views.FavouritesActivity"/>
+
     </application>
 
 </manifest>
