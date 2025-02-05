@@ -22,7 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.RegisterActivity"/>
-        <activity android:name=".views.DashboardActivity"/>
+        <activity android:name=".views.DashboardActivity"
+            android:exported="true">
+        </activity>
         <activity android:name=".views.DetailActivity"/>
 
         <activity android:name=".models.Recipe"/>
@@ -33,6 +35,8 @@
         <activity android:name=".viewmodels.LoginViewModel"/>
         <activity android:name=".viewmodels.RegisterViewModel"/>
         <activity android:name=".adapters.RecipeAdapter"/>
+
+        <activity android:name=".views.FavouritesActivity"/>
 
     </application>
 
