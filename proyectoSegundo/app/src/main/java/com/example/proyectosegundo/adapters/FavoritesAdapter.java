@@ -38,19 +38,20 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public void onBindViewHolder(FavoriteViewHolder holder, int position) {
         Recipe favorito = favoritos.get(position);
-        //holder.nameTextView.setText(favorito.getDescripcion());
 
+        // Configurar los datos de cada receta en el adaptador
         holder.tvTitle.setText(favorito.getTitulo());
         holder.tvDescription.setText(favorito.getDescripcion());
         Picasso.get().load(favorito.getImagen()).into(holder.ivImage);
 
         // Configurar el clic en cada ítem
-        //holder.itemView.setOnClickListener(v -> {
-            //if (onItemClickListener != null) {
-           //     onItemClickListener.onItemClick(favorito);
-         //   }
-       // });
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(favorito);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

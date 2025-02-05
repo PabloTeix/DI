@@ -12,16 +12,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private DatabaseReference mRecetas;
 
     public UserRepository() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mRecetas = FirebaseDatabase.getInstance().getReference("recetas");
     }
 
     // Método para registrar un nuevo usuario
@@ -62,31 +65,93 @@ public class UserRepository {
         return mAuth.getCurrentUser();
     }
 
-    // Método para obtener los favoritos del usuario
-    public void getFavoritos(final OnCompleteListener<DataSnapshot> listener) {
+    // Método para obtener los favoritos de un usuario
+    public void getFavoritos(final RecipeCallback callback) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
+            // Primero obtenemos los IDs de los favoritos
+            Log.d("UserRepository", "Usuario autenticado: " + user.getUid());
             mDatabase.child(user.getUid()).child("favoritos")
                     .get() // Recuperamos los favoritos del usuario desde Firebase
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            // Aquí puedes manejar los favoritos obtenidos si es necesario
-                            listener.onComplete(task); // Devolver la lista de favoritos
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            // Extraemos los favoritos del DataSnapshot
+                            List<String> favoritosId = new ArrayList<>();
+                            DataSnapshot snapshot = task.getResult();
+
+                            // Llenamos la lista con los IDs de las recetas favoritas
+                            for (DataSnapshot favoritoSnapshot : snapshot.getChildren()) {
+                                String recipeId = favoritoSnapshot.getKey(); // Usamos el key del snapshot (elementId)
+                                if (recipeId != null) {
+                                    favoritosId.add(recipeId);
+                                }
+                            }
+
+                            // Ahora, obtenemos las recetas completas usando los IDs
+                            List<Recipe> favoritosList = new ArrayList<>();
+                            for (String recipeId : favoritosId) {
+                                getRecipeById(recipeId, new RecipeCallback() {
+                                    @Override
+                                    public void onSuccess(List<Recipe> recipeList) {
+                                        favoritosList.addAll(recipeList); // Agregamos la receta a la lista de favoritos
+                                        if (favoritosList.size() == favoritosId.size()) {
+                                            // Si ya hemos agregado todas las recetas, llamamos al callback
+                                            callback.onSuccess(favoritosList);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMessage) {
+                                        Log.e("Error", "Error al obtener receta con ID: " + recipeId);
+                                        callback.onFailure(errorMessage); // Pasamos el mensaje de error al callback
+                                    }
+                                });
+                            }
                         } else {
-                            listener.onComplete(task); // En caso de error
+                            Log.e("Error", "Error al obtener los favoritos: " + task.getException());
+                            callback.onFailure("Error al obtener los favoritos");
                         }
                     });
         } else {
-            listener.onComplete(null); // Si el usuario no está autenticado
+            callback.onFailure("Usuario no autenticado");
         }
+    }
+
+    // Método para obtener una receta por su ID
+    private void getRecipeById(String recipeId, final RecipeCallback callback) {
+        mRecetas.child(recipeId)  // Accedemos a la receta usando su ID
+                .get()  // Obtenemos los datos de la receta desde Firebase
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        DataSnapshot recipeSnapshot = task.getResult();
+                        // Suponemos que Recipe es una clase con estos atributos
+                        Recipe recipe = recipeSnapshot.getValue(Recipe.class);
+
+                        if (recipe != null) {
+                            // Si la receta fue encontrada, la agregamos a una lista de recetas
+                            List<Recipe> favoritosList = new ArrayList<>();
+                            favoritosList.add(recipe); // Agregamos la receta a la lista
+
+                            // Ahora, llamamos al callback con la lista de recetas
+                            callback.onSuccess(favoritosList);
+                        } else {
+                            // Si no se encuentra la receta, pasamos un mensaje de error
+                            callback.onFailure("Receta no encontrada");
+                        }
+                    } else {
+                        // Si ocurre un error al obtener la receta, pasamos un mensaje de error
+                        callback.onFailure("Error al obtener la receta");
+                    }
+                });
     }
 
     // Método para agregar un elemento a los favoritos
     public void addToFavoritos(String elementId, final OnCompleteListener<Void> listener) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
+            // Usamos el ID de la receta como clave para agregarla a los favoritos
             mDatabase.child(user.getUid()).child("favoritos").child(elementId).setValue(elementId)
-                    .addOnCompleteListener(listener); // Guardar el elementId en lugar de true
+                    .addOnCompleteListener(listener); // Guardamos el ID de la receta
         } else {
             listener.onComplete(null); // Si no hay usuario autenticado
         }
@@ -96,13 +161,22 @@ public class UserRepository {
     public void removeFromFavoritos(String elementId, final OnCompleteListener<Void> listener) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
+            // Eliminamos el ID de la receta de los favoritos
             mDatabase.child(user.getUid()).child("favoritos").child(elementId).removeValue()
-                    .addOnCompleteListener(listener); // Eliminar el elemento de los favoritos
+                    .addOnCompleteListener(listener); // Eliminar el ID de la receta
         } else {
             listener.onComplete(null); // Si no hay usuario autenticado
         }
     }
+
+    // Interfaz de callback para manejar el resultado de obtener recetas
+    public interface RecipeCallback {
+        void onSuccess(List<Recipe> recipeList);
+        void onFailure(String errorMessage);
+    }
 }
+
+
 
 
 

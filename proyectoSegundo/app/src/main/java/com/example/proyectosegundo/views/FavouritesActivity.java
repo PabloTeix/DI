@@ -82,6 +82,7 @@ public class FavouritesActivity extends AppCompatActivity {
         btnRetroceder.setOnClickListener(v -> retroceder());
     }
 
+
     public void retroceder() {
         Intent intent = new Intent(FavouritesActivity.this, DashboardActivity.class);
         startActivity(intent);

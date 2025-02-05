@@ -1,10 +1,13 @@
 package com.example.proyectosegundo.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,11 +35,14 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
+        // Inicialización de vistas
         recyclerView = findViewById(R.id.recyclerView);
         btnLogout = findViewById(R.id.btnLogout);
-        btnListaFavoritos=findViewById(R.id.btnListaFavoritos);
+        btnListaFavoritos = findViewById(R.id.btnListaFavoritos);
+        Button themeButton = findViewById(R.id.themeButton); // Botón para cambiar el tema
         mAuth = FirebaseAuth.getInstance();
 
+        // Configuración del RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Inicializar adaptador vacío
@@ -63,6 +69,37 @@ public class DashboardActivity extends AppCompatActivity {
         // Configurar el botón de ListaFavoritos
         btnListaFavoritos.setOnClickListener(v -> lista_favoritos());
 
+        // Configurar el botón de cambio de tema
+        SharedPreferences sharedPref = getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean darkMode = sharedPref.getBoolean("darkMode", false);
+
+        // Establecer el tema inicial según la preferencia guardada
+        if (darkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        // Acción al hacer clic en el botón para alternar el tema
+        themeButton.setOnClickListener(v -> {
+            // Recuperar el estado actual del modo oscuro
+            boolean isDarkMode = sharedPref.getBoolean("darkMode", false);
+
+            // Cambiar el estado y guardarlo
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("darkMode", !isDarkMode); // Cambiar el valor
+            editor.apply();
+
+            // Aplicar el nuevo tema
+            if (isDarkMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Modo claro
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // Modo oscuro
+            }
+
+            recreate(); // Recrear la actividad para aplicar el nuevo tema
+        });
+
         // Configurar el click en cada item del RecyclerView
         recipeAdapter.setOnItemClickListener(new RecipeAdapter.OnItemClickListener() {
             @Override
@@ -74,7 +111,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent.putExtra("title", recipe.getTitulo());
                 intent.putExtra("description", recipe.getDescripcion());
                 intent.putExtra("imageUrl", recipe.getImagen());
-                intent.putExtra("elementId",recipe.getId());
+                intent.putExtra("elementId", recipe.getId());
 
                 // Iniciar la actividad DetailActivity
                 startActivity(intent);
@@ -82,6 +119,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+    // Método para cerrar sesión
     private void logoutUser() {
         mAuth.signOut();
         Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
@@ -89,12 +127,14 @@ public class DashboardActivity extends AppCompatActivity {
         finish();
     }
 
+    // Método para ver la lista de favoritos
     public void lista_favoritos() {
         Intent intent = new Intent(DashboardActivity.this, FavouritesActivity.class);
         startActivity(intent);
         finish();
     }
 }
+
 
 
 

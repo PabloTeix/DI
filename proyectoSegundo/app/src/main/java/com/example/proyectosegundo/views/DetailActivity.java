@@ -1,7 +1,5 @@
 package com.example.proyectosegundo.views;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectosegundo.R;
+import com.example.proyectosegundo.models.Recipe;
 import com.example.proyectosegundo.repositories.UserRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -60,29 +59,28 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             // Verificar si el elemento ya está en los favoritos
-            userRepository.getFavoritos(new OnCompleteListener<DataSnapshot>() {
+            // Verificar si el elemento ya está en los favoritos
+            userRepository.getFavoritos(new UserRepository.RecipeCallback() {
                 @Override
-                public void onComplete(Task<DataSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        // Obtenemos los favoritos
-                        DataSnapshot dataSnapshot = task.getResult();
-                        List<String> favoritos = new ArrayList<>();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String favorito = snapshot.getValue(String.class);
-                            if (favorito != null) {
-                                favoritos.add(favorito);
-                            }
-                        }
-
-                        // Verificamos si el elemento es favorito
-                        isFavorite = favoritos.contains(elementId);
-
-                        // Actualizamos el ícono según el estado
-                        updateFavoriteIcon();
-                    } else {
-                        // En caso de error al obtener los favoritos
-                        Toast.makeText(DetailActivity.this, "Error al obtener los favoritos", Toast.LENGTH_SHORT).show();
+                public void onSuccess(List<Recipe> recipeList) {
+                    // Crear una lista con los IDs de los favoritos
+                    List<String> favoritos = new ArrayList<>();
+                    for (Recipe recipe : recipeList) {
+                        // Asumimos que cada receta tiene un ID único
+                        favoritos.add(recipe.getId());
                     }
+
+                    // Verificamos si el elemento es favorito
+                    isFavorite = favoritos.contains(elementId);
+
+                    // Actualizamos el ícono según el estado
+                    updateFavoriteIcon();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    // En caso de error al obtener los favoritos
+                    Toast.makeText(DetailActivity.this, "Error al obtener los favoritos: " + errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -135,5 +133,8 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 }
+
+
+
 
 
