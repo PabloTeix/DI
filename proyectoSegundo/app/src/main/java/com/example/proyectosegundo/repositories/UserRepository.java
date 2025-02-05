@@ -65,7 +65,6 @@ public class UserRepository {
         return mAuth.getCurrentUser();
     }
 
-    // Método para obtener los favoritos de un usuario
     public void getFavoritos(final RecipeCallback callback) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -116,6 +115,7 @@ public class UserRepository {
             callback.onFailure("Usuario no autenticado");
         }
     }
+
 
     // Método para obtener una receta por su ID
     private void getRecipeById(String recipeId, final RecipeCallback callback) {

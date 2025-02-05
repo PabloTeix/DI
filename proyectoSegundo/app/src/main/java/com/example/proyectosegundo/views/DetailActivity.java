@@ -2,6 +2,7 @@ package com.example.proyectosegundo.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ public class DetailActivity extends AppCompatActivity {
             String imageUrl = intent.getStringExtra("imageUrl");
             elementId = intent.getStringExtra("elementId"); // El ID único del elemento
 
+
+
             // Establecer los valores en la interfaz
             tvTitle.setText(title);
             tvDescription.setText(description);
@@ -59,16 +62,17 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             // Verificar si el elemento ya está en los favoritos
-            // Verificar si el elemento ya está en los favoritos
             userRepository.getFavoritos(new UserRepository.RecipeCallback() {
                 @Override
                 public void onSuccess(List<Recipe> recipeList) {
                     // Crear una lista con los IDs de los favoritos
                     List<String> favoritos = new ArrayList<>();
                     for (Recipe recipe : recipeList) {
-                        // Asumimos que cada receta tiene un ID único
-                        favoritos.add(recipe.getId());
+                        String recipeId = recipe.getId();
+                        Log.d("DetailActivity", "ID de la receta: " + recipeId);
+                        favoritos.add(recipeId);
                     }
+
 
                     // Verificamos si el elemento es favorito
                     isFavorite = favoritos.contains(elementId);
