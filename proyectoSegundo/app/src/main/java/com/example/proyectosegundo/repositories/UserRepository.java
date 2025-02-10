@@ -126,6 +126,7 @@ public class UserRepository {
                         DataSnapshot recipeSnapshot = task.getResult();
                         // Suponemos que Recipe es una clase con estos atributos
                         Recipe recipe = recipeSnapshot.getValue(Recipe.class);
+                        recipe.setId(recipeId);
 
                         if (recipe != null) {
                             // Si la receta fue encontrada, la agregamos a una lista de recetas
