@@ -1,6 +1,7 @@
 package com.example.proyectosegundo.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import com.example.proyectosegundo.models.Recipe;
 import com.example.proyectosegundo.viewmodels.FavouritesViewModel;
 
 import java.util.Collections;
-import java.util.List;
 
 public class FavouritesFragment extends Fragment {
 
@@ -63,18 +63,23 @@ public class FavouritesFragment extends Fragment {
             }
         });
 
+        // Configurar el RecyclerView con el adaptador
         recyclerView.setAdapter(adapter);
 
         // Observar los cambios en la lista de favoritos
         favouritesViewModel.getFavoritos().observe(getViewLifecycleOwner(), favoritosList -> {
             if (favoritosList != null && !favoritosList.isEmpty()) {
-                // Actualizar el adaptador con la lista de favoritos
-                adapter.updateData(favoritosList); // Método para actualizar la lista en el adaptador
+                Log.d("FavouritesFragment", "Favoritos cargados: " + favoritosList.size());
+                adapter.updateData(favoritosList); // Actualizamos el adaptador con la lista de favoritos
             } else {
                 Toast.makeText(getActivity(), "No tienes favoritos", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Cargar los favoritos (esto debería estar dentro del ViewModel)
+        favouritesViewModel.loadFavoritos();
+
         return view;
     }
 }
+
