@@ -13,19 +13,24 @@
         android:theme="@style/Theme.ProyectoSegundo"
         tools:targetApi="31">
         <activity
-            android:name=".views.LoginActivity"
+            android:name=".views.MainActivity">
+
+        </activity>
+        <activity android:name=".views.RegisterActivity"/>
+        <activity android:name=".views.DashboardFragment"
             android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.RegisterActivity"/>
-        <activity android:name=".views.DashboardActivity"
-            android:exported="true">
-        </activity>
-        <activity android:name=".views.DetailActivity"/>
+        <activity android:name=".views.DetailFragment"/>
+        <activity android:name=".views.SplashActivity"/>
 
         <activity android:name=".models.Recipe"/>
         <activity android:name=".models.User"/>
@@ -36,7 +41,7 @@
         <activity android:name=".viewmodels.RegisterViewModel"/>
         <activity android:name=".adapters.RecipeAdapter"/>
 
-        <activity android:name=".views.FavouritesActivity"/>
+        <activity android:name=".views.FavouritesFragment"/>
 
     </application>
 

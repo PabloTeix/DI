@@ -1,6 +1,5 @@
 package com.example.proyectosegundo.views;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.proyectosegundo.R;
 import com.example.proyectosegundo.viewmodels.LoginViewModel;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private LoginViewModel loginViewModel;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +51,12 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel.getLoggedInUser().observe(this, user -> {
             if (user != null) {
-                // Si el login es exitoso, redirigir al DashboardActivity
-                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                // Si el login es exitoso, iniciar MainActivity directamente
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish(); // Finalizar LoginActivity para evitar que el usuario regrese con el botón de atrás
+
+                // Finalizar la actividad de login para evitar que el usuario regrese con el botón de atrás
+                finish();
             }
         });
 
@@ -65,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
             String email = etEmailLogin.getText().toString().trim();
             String password = etPasswordLogin.getText().toString().trim();
+
+            // Validar los campos
+            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                Toast.makeText(LoginActivity.this, "Por favor, ingresa todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // Usar el ViewModel para iniciar sesión
             loginViewModel.loginUser(email, password);
@@ -77,4 +82,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
+
+
 
