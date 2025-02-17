@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre Completo"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textPersonName" />
 
     <EditText
@@ -17,6 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -24,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textPassword" />
 
     <EditText
@@ -31,6 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Confirmar Contraseña"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textPassword" />
 
     <EditText
@@ -38,6 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Teléfono"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="phone" />
 
     <EditText
@@ -45,6 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Dirección"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textPostalAddress" />
 
     <Button

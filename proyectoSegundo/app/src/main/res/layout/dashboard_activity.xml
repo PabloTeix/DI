@@ -5,12 +5,24 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lista de Recetas"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="16dp"/>
+
     <!-- RecyclerView para mostrar la lista de recetas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dashboardRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+
+
 
     <!-- Botón para ver la lista de favoritos -->
    <!-- <Button
